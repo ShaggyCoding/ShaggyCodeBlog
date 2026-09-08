@@ -9,11 +9,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     activityElement.innerHTML = skeletons(3, "row");
 
     try {
-        const [user, repositories, pushes] = await Promise.all([
+        const [user, repositories, rawPushes] = await Promise.all([
             GitHub.user(),
             GitHub.repos(),
             GitHub.pushes(),
         ]);
+        const pushes = await GitHub.enrichPushes(rawPushes);
 
         const starCount = repositories.reduce((sum, repository) => sum + repository.stargazers_count, 0);
         const commitCount = pushes.reduce((sum, event) => sum + event.payload.size, 0);

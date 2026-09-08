@@ -93,7 +93,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     feedEl.innerHTML = skeletons(5, "row");
 
     try {
-        pushes = await GitHub.pushes(3);
+        const rawPushes = await GitHub.pushes(3);
+        pushes = await GitHub.enrichPushes(rawPushes);
 
         if (!pushes.length) {
             statsEl.innerHTML = "";

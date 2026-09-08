@@ -62,11 +62,41 @@ const GitHub = (() => {
     }
 
     const pushes = (pageCount) =>
-        events(pageCount).then((allEvents) =>
-            allEvents.filter((event) => event.type === "PushEvent" && event.payload.commits?.length)
-        );
+        events(pageCount).then((allEvents) => allEvents.filter((event) => event.type === "PushEvent"));
 
-    return { user, repos, pushes };
+    // GitHub's public events feed no longer includes the pushed commits in
+    // a PushEvent's payload (only the before/head SHA range) — fetch the
+    // real commit list via the compare API instead. Capped to the most
+    // recent MAX_ENRICH pushes so a very active account can't blow through
+    // the anonymous 60-requests/hour rate limit on a single page load.
+    const MAX_ENRICH = 40;
+
+    async function compareCommits(repoFullName, before, head) {
+        if (!before || !head || before === head) return [];
+        try {
+            const comparison = await request(`/repos/${repoFullName}/compare/${before}...${head}`);
+            return (comparison.commits || []).map((commit) => ({
+                sha: commit.sha,
+                message: commit.commit.message,
+            }));
+        } catch {
+            return [];
+        }
+    }
+
+    async function enrichPushes(pushEvents) {
+        return Promise.all(
+            pushEvents.map(async (event, index) => {
+                const commits =
+                    index < MAX_ENRICH
+                        ? await compareCommits(event.repo.name, event.payload.before, event.payload.head)
+                        : [];
+                return { ...event, payload: { ...event.payload, commits, size: commits.length } };
+            })
+        );
+    }
+
+    return { user, repos, pushes, enrichPushes };
 })();
 
 const LANGUAGE_COLORS = {
