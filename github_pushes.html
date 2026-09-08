@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#0a0a0a">
-    <title>Activity — Shaggy</title>
-    <meta name="description" content="A live view of Shaggy's recent public GitHub pushes and commits.">
-    <meta property="og:title" content="Activity — Shaggy">
-    <meta property="og:description" content="A live trail of public pushes, branches, and commits from the last 90 days.">
+    <meta name="theme-color" content="#080d16">
+    <title>Aktivität — Finn Eric Kawel</title>
+    <meta name="description" content="Aktuelle öffentliche GitHub-Pushes und Commits von Finn Eric Kawel im Live-Überblick.">
+    <meta property="og:title" content="Aktivität — Finn Eric Kawel">
+    <meta property="og:description" content="Öffentliche Pushes, Branches und Commits aus den vergangenen 90 Tagen.">
     <meta property="og:image" content="assets/images/og.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="Shaggy — Code that leaves a trace">
+    <meta property="og:image:alt" content="Finn Eric Kawel — Öffentliche GitHub-Aktivität">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content="assets/images/og.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,20 +20,20 @@
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-    <a class="skip-link" href="#main">Skip to content</a>
+    <a class="skip-link" href="#main">Zum Inhalt springen</a>
 
     <header class="header">
         <div class="shell header__inner">
-            <a class="brand" href="index.html" aria-label="Shaggy, home"><span class="brand__signal" aria-hidden="true"></span><span data-site-name>Shaggy</span><span class="brand__suffix">/DEV</span></a>
-            <nav class="nav" id="nav" aria-label="Main navigation">
-                <a class="nav__link" href="index.html">Index</a>
-                <a class="nav__link" href="projects.html">Projects</a>
-                <a class="nav__link is-active" href="github_pushes.html" aria-current="page">Activity</a>
-                <a class="nav__link" href="about.html">About</a>
+            <a class="brand" href="index.html" aria-label="Finn Eric Kawel, Startseite"><span class="brand__signal" aria-hidden="true"></span><span data-site-name>Finn Eric Kawel</span><span class="brand__suffix">/DEV</span></a>
+            <nav class="nav" id="nav" aria-label="Hauptnavigation">
+                <a class="nav__link" href="index.html">Start</a>
+                <a class="nav__link" href="projects.html">Projekte</a>
+                <a class="nav__link is-active" href="github_pushes.html" aria-current="page">Aktivität</a>
+                <a class="nav__link" href="about.html">Profil</a>
             </nav>
             <div class="header__end">
-                <a class="header__github" href="https://github.com" target="_blank" rel="noopener" data-github-url>GitHub <span aria-hidden="true">↗</span></a>
-                <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="nav"><span></span><span></span></button>
+                <a class="header__github" href="https://github.com/ShaggyCoding" target="_blank" rel="noopener" data-github-url>GitHub <span aria-hidden="true">↗</span></a>
+                <button class="nav-toggle" type="button" aria-label="Navigation öffnen" aria-expanded="false" aria-controls="nav"><span></span><span></span></button>
             </div>
         </div>
     </header>
@@ -42,23 +42,23 @@
         <section class="page-hero page-hero--activity">
             <div class="shell">
                 <div class="page-hero__top reveal">
-                    <span class="section-index">Signal / Last 90 days</span>
-                    <span class="availability"><i aria-hidden="true"></i> Public feed online</span>
+                    <span class="section-index">Signal / Letzte 90 Tage</span>
+                    <span class="availability"><i aria-hidden="true"></i> Öffentlicher Feed aktiv</span>
                 </div>
                 <div class="page-hero__grid">
-                    <h1 class="reveal">Proof of<br><em>work.</em></h1>
-                    <p class="reveal">Every public push leaves a trace. This is the live trail: repositories touched, branches moved, and commit messages shipped.</p>
+                    <h1 class="reveal">Arbeit wird<br><em>sichtbar.</em></h1>
+                    <p class="reveal">Jeder öffentliche Push hinterlässt eine Spur. Diese Ansicht zeigt Repositories, Branches und Commit-Nachrichten direkt aus dem GitHub-Profil.</p>
                 </div>
-                <div class="stats reveal" data-stats aria-label="Recent activity statistics"></div>
+                <div class="stats reveal" data-stats aria-label="Statistiken der letzten 90 Tage"></div>
             </div>
         </section>
 
         <section class="rhythm-section">
             <div class="shell rhythm-layout">
                 <div class="reveal">
-                    <span class="section-index">01 / Commit rhythm</span>
-                    <h2>Thirteen weeks,<br>one honest graph.</h2>
-                    <p>Intensity reflects the number of commits included in public push events on each day.</p>
+                    <span class="section-index">01 / Commit-Rhythmus</span>
+                    <h2>Dreizehn Wochen,<br>ein ehrlicher Verlauf.</h2>
+                    <p>Die Intensität zeigt die Anzahl der Commits, die GitHub an einem Tag in öffentlichen Push-Events erfasst hat.</p>
                 </div>
                 <div class="heatmap reveal" data-heatmap></div>
             </div>
@@ -68,26 +68,33 @@
             <div class="shell">
                 <div class="timeline-head reveal">
                     <div>
-                        <span class="section-index">02 / Push timeline</span>
-                        <h2>Latest movement.</h2>
+                        <span class="section-index">02 / Push-Timeline</span>
+                        <h2>Letzte Bewegung.</h2>
                     </div>
                     <label class="select-wrap select-wrap--dark">
                         <span>Repository</span>
-                        <select class="select" aria-label="Filter by repository" data-repo-filter><option value="all">All repositories</option></select>
+                        <select class="select" aria-label="Nach Repository filtern" data-repo-filter><option value="all">Alle Repositories</option></select>
                     </label>
                 </div>
                 <div class="feed feed--full" data-feed></div>
-                <div class="load-more"><button class="button button--outline" type="button" data-more hidden>Load more pushes <span aria-hidden="true">↓</span></button></div>
+                <div class="load-more"><button class="button button--outline" type="button" data-more hidden>Weitere Pushes laden <span aria-hidden="true">↓</span></button></div>
+            </div>
+        </section>
+
+        <section class="github-cta">
+            <div class="shell github-cta__inner reveal">
+                <div><span class="section-index">Vollständiges Profil</span><h2>Mehr auf GitHub.</h2></div>
+                <a class="button button--acid" href="https://github.com/ShaggyCoding" target="_blank" rel="noopener" data-github-url><span data-github-handle>@ShaggyCoding</span> öffnen <span aria-hidden="true">↗</span></a>
             </div>
         </section>
     </main>
 
     <footer class="footer">
         <div class="shell footer__top">
-            <a class="footer__brand" href="index.html"><span data-site-name>Shaggy</span><small>Developer in public</small></a>
-            <nav class="footer__links" aria-label="Footer navigation"><a href="projects.html">Projects</a><a href="github_pushes.html">Activity</a><a href="about.html">About</a><a href="https://github.com" target="_blank" rel="noopener" data-github-url>GitHub ↗</a></nav>
+            <a class="footer__brand" href="index.html"><span data-site-name>Finn Eric Kawel</span><small>Entwicklung mit System</small></a>
+            <nav class="footer__links" aria-label="Navigation im Footer"><a href="projects.html">Projekte</a><a href="github_pushes.html">Aktivität</a><a href="about.html">Profil</a><a href="https://github.com/ShaggyCoding" target="_blank" rel="noopener" data-github-url>GitHub ↗</a></nav>
         </div>
-        <div class="shell footer__bottom"><span>© <span data-year></span> <span data-site-name>Shaggy</span></span><span>Built in Germany / Shipped worldwide</span></div>
+        <div class="shell footer__bottom"><span>© <span data-year></span> <span data-site-name>Finn Eric Kawel</span></span><span>Entwickelt in Deutschland / offen dokumentiert</span></div>
     </footer>
 
     <script src="assets/js/config.js"></script>

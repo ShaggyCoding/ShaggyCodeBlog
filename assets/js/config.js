@@ -1,12 +1,12 @@
 const SITE = {
-    githubUsername: "shaggy",
-    name: "Shaggy",
-    role: "Software Developer",
-    tagline: "I build things for the web and ship them in public.",
-    location: "Germany",
+    githubUsername: "ShaggyCoding",
+    name: "Finn Eric Kawel",
+    role: "Softwareentwickler",
+    tagline: "Digitale Werkzeuge, saubere Lösungen und nachvollziehbare Entwicklung.",
+    location: "Deutschland",
     email: "",
     social: {
-        github: "https://github.com/shaggy",
+        github: "https://github.com/ShaggyCoding",
         linkedin: "",
         x: "",
     },

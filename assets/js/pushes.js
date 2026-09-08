@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         const cells = [];
         while (cursor <= today) {
             const commits = perDay.get(dayKey(cursor)) || 0;
-            const label = `${commits} commit${commits === 1 ? "" : "s"} on ${absoluteDate(cursor.toISOString())}`;
+            const label = `${commits} ${commits === 1 ? "Commit" : "Commits"} am ${absoluteDate(cursor.toISOString())}`;
             cells.push(`<div class="heatmap__day" data-level="${levelFor(commits)}" title="${label}"></div>`);
             cursor.setDate(cursor.getDate() + 1);
         }
@@ -44,9 +44,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         heatmapEl.innerHTML = `
             <div class="heatmap__grid">${cells.join("")}</div>
             <div class="heatmap__legend">
-                Less
+                Weniger
                 ${[0, 1, 2, 3, 4].map((level) => `<div class="heatmap__day" data-level="${level}"></div>`).join("")}
-                More
+                Mehr
             </div>
         `;
     }
@@ -64,8 +64,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         statsEl.innerHTML = [
             ["Pushes", events.length],
             ["Commits", commits],
-            ["Repos touched", repos.size],
-            ["Best day", peak],
+            ["Aktive Repos", repos.size],
+            ["Stärkster Tag", peak],
         ]
             .map(
                 ([label, value]) => `
@@ -84,7 +84,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         feedEl.innerHTML = matches.length
             ? matches.slice(0, visible).map(pushItem).join("")
-            : `<div class="state"><p class="state__title">No pushes here</p><p>Pick another repository to see its activity.</p></div>`;
+            : `<div class="state"><p class="state__title">Keine Pushes vorhanden</p><p>Wähle ein anderes Repository, um dessen Aktivität zu sehen.</p></div>`;
 
         moreEl.hidden = matches.length <= visible;
         observeReveals(feedEl);
@@ -98,7 +98,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (!pushes.length) {
             statsEl.innerHTML = "";
             heatmapEl.innerHTML = "";
-            feedEl.innerHTML = `<div class="state"><p class="state__title">No public pushes in the last 90 days</p><p>GitHub's activity feed only reaches back three months.</p></div>`;
+            feedEl.innerHTML = `<div class="state"><p class="state__title">Keine öffentlichen Pushes in den letzten 90 Tagen</p><p>Der öffentliche GitHub-Aktivitätsfeed reicht drei Monate zurück.</p></div>`;
             return;
         }
 
@@ -107,7 +107,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         const names = [...new Set(pushes.map((event) => event.repo.name))].sort();
         filterEl.innerHTML =
-            `<option value="all">All repositories</option>` +
+            `<option value="all">Alle Repositories</option>` +
             names.map((name) => `<option value="${escapeHtml(name)}">${escapeHtml(name)}</option>`).join("");
 
         filterEl.addEventListener("change", () => {

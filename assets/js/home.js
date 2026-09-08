@@ -19,10 +19,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         const commitCount = pushes.reduce((sum, event) => sum + event.payload.size, 0);
 
         statsElement.innerHTML = [
-            ["Public repos", repositories.length],
-            ["Stars earned", starCount],
-            ["Commits / 90d", commitCount],
-            ["Followers", user.followers],
+            ["Öffentliche Repos", repositories.length],
+            ["GitHub-Sterne", starCount],
+            ["Commits / 90 Tage", commitCount],
+            ["Follower", user.followers],
         ].map(([label, value]) => `
             <div class="stat">
                 <div class="stat__value">${formatNumber(value)}</div>
@@ -40,11 +40,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         featuredElement.innerHTML = featured.length
             ? featured.map(repoCard).join("")
-            : `<div class="state"><p class="state__title">No public repositories yet</p><p>New work will appear here after the first public push.</p></div>`;
+            : `<div class="state"><p class="state__title">Noch keine öffentlichen Repositories</p><p>Neue Projekte erscheinen hier automatisch nach dem ersten öffentlichen Push.</p></div>`;
 
         activityElement.innerHTML = pushes.length
             ? pushes.slice(0, 4).map(pushItem).join("")
-            : `<div class="state"><p class="state__title">No recent pushes</p><p>GitHub exposes public activity from the last 90 days.</p></div>`;
+            : `<div class="state"><p class="state__title">Keine aktuellen Pushes</p><p>GitHub zeigt öffentliche Aktivität aus den vergangenen 90 Tagen.</p></div>`;
 
         const repositoryCountByLanguage = new Map();
         for (const repository of repositories) {
@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             ["public_repos", String(repositories.length)],
             ["community_stars", String(starCount)],
             ["last_push", lastPush ? relativeTime(lastPush.created_at) : "—"],
-            ["current_mode", "shipping"],
+            ["current_mode", "building"],
         ].map(([key, value]) =>
             `<code><span class="tok-key">${key}</span>: <span class="tok-val">"${escapeHtml(value)}"</span></code>`
         ).join("");

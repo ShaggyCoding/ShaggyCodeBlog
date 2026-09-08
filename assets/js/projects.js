@@ -30,11 +30,11 @@ document.addEventListener("DOMContentLoaded", async () => {
         const rest = matches.filter((repo) => !SITE.featured.includes(repo.name));
         const ordered = [...pinned, ...rest];
 
-        countEl.textContent = `${ordered.length} ${ordered.length === 1 ? "project" : "projects"}`;
+        countEl.textContent = `${ordered.length} ${ordered.length === 1 ? "Projekt" : "Projekte"}`;
 
         gridEl.innerHTML = ordered.length
             ? ordered.map(repoCard).join("")
-            : `<div class="state"><p class="state__title">No matches</p><p>Try a different search term or clear the language filter.</p></div>`;
+            : `<div class="state"><p class="state__title">Keine Treffer</p><p>Versuche einen anderen Suchbegriff oder setze den Sprachfilter zurück.</p></div>`;
 
         observeReveals(gridEl);
     }
@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         `;
 
         chipsEl.innerHTML =
-            chip("all", "All", repos.length, false) +
+            chip("all", "Alle", repos.length, false) +
             [...counts.entries()]
                 .sort((a, b) => b[1] - a[1])
                 .map(([lang, count]) => chip(lang, lang, count, true))
