@@ -141,12 +141,6 @@ p {
     height: 7px;
     border-radius: 50%;
     background: var(--acid);
-    box-shadow: 0 0 0 5px rgba(93, 228, 255, 0.12);
-    animation: pulse 2.4s ease-in-out infinite;
-}
-
-@keyframes pulse {
-    50% { box-shadow: 0 0 0 9px rgba(93, 228, 255, 0); }
 }
 
 .header {
@@ -351,19 +345,6 @@ p {
     background-size: 80px 80px;
 }
 
-.hero::after {
-    content: "";
-    position: absolute;
-    right: -6vw;
-    top: 6vh;
-    width: 36vw;
-    height: 36vw;
-    border: 1px solid rgba(93, 228, 255, 0.18);
-    border-radius: 50%;
-    box-shadow: 0 0 120px rgba(93, 228, 255, 0.08);
-    pointer-events: none;
-}
-
 .hero__meta,
 .page-hero__top {
     display: flex;
@@ -387,10 +368,9 @@ p {
 
 .hero__title {
     max-width: 950px;
-    font-size: clamp(4.2rem, 9.6vw, 9.7rem);
-    line-height: 0.82;
-    letter-spacing: -0.085em;
-    text-transform: uppercase;
+    font-size: clamp(3.4rem, 7.2vw, 7rem);
+    line-height: 0.94;
+    letter-spacing: -0.03em;
 }
 
 .hero__title em,
@@ -398,10 +378,7 @@ p {
 .page-hero h1 em,
 .contact-band h2 em {
     color: var(--acid);
-    font-family: Georgia, "Times New Roman", serif;
-    font-weight: 400;
-    letter-spacing: -0.06em;
-    text-transform: none;
+    font-style: normal;
 }
 
 .hero__intro {
@@ -552,39 +529,6 @@ p {
     text-transform: uppercase;
 }
 
-.ticker {
-    overflow: hidden;
-    border-top: 1px solid rgba(10,10,10,0.18);
-    border-bottom: 1px solid rgba(10,10,10,0.18);
-    background: var(--acid);
-    color: var(--ink);
-}
-
-.ticker__track {
-    display: flex;
-    width: max-content;
-    align-items: center;
-    gap: 34px;
-    padding: 14px 0;
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    font-weight: 500;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    animation: ticker 32s linear infinite;
-}
-
-.ticker__track i {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--ink);
-}
-
-@keyframes ticker {
-    to { transform: translateX(-50%); }
-}
-
 .section {
     padding: clamp(90px, 11vw, 170px) 0;
 }
@@ -604,8 +548,7 @@ p {
 
 .section-title {
     margin-top: 28px;
-    font-size: clamp(3.5rem, 7.2vw, 7.5rem);
-    text-transform: uppercase;
+    font-size: clamp(2.6rem, 5vw, 5rem);
 }
 
 .section-head__aside {
@@ -639,22 +582,8 @@ p {
     transition: color 250ms ease, background 250ms ease;
 }
 
-.card::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(520px circle at var(--mx, 50%) var(--my, 50%), rgba(93, 228, 255, 0.38), transparent 40%);
-    opacity: 0;
-    transition: opacity 250ms ease;
-    pointer-events: none;
-}
-
 .card:hover {
     background: #e3eaf0;
-}
-
-.card:hover::before {
-    opacity: 1;
 }
 
 .card > * {
@@ -665,13 +594,9 @@ p {
 .repo__index {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-end;
     margin-bottom: 48px;
     color: #6d6d65;
-    font-family: var(--font-mono);
-    font-size: 0.63rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
 }
 
 .repo__arrow {
@@ -941,8 +866,7 @@ p {
 }
 
 .contact-band h2 {
-    font-size: clamp(4rem, 8vw, 8rem);
-    text-transform: uppercase;
+    font-size: clamp(2.8rem, 5.5vw, 5.5rem);
 }
 
 .contact-band h2 em {
@@ -1033,8 +957,7 @@ p {
 }
 
 .page-hero h1 {
-    font-size: clamp(4.5rem, 9.2vw, 9.5rem);
-    text-transform: uppercase;
+    font-size: clamp(3.2rem, 6.5vw, 6.5rem);
 }
 
 .page-hero__grid > p {
@@ -1292,8 +1215,7 @@ p {
 
 .github-cta h2 {
     margin-top: 15px;
-    font-size: clamp(2.8rem, 6vw, 6rem);
-    text-transform: uppercase;
+    font-size: clamp(2.2rem, 4vw, 4rem);
 }
 
 .manifesto-section {

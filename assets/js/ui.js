@@ -45,7 +45,6 @@ function repoCard(repo) {
     return `
         <article class="card reveal">
             <div class="repo__index">
-                <span>Öffentliches Repository</span>
                 <span class="repo__arrow" aria-hidden="true">↗</span>
             </div>
             <h3 class="repo__name"><a href="${escapeHtml(repo.html_url)}" target="_blank" rel="noopener">${escapeHtml(repo.name)}</a></h3>
@@ -140,14 +139,6 @@ document.addEventListener("DOMContentLoaded", () => {
         nav.classList.remove("is-open");
         navToggle.setAttribute("aria-expanded", "false");
     });
-
-    document.addEventListener("pointermove", (event) => {
-        const card = event.target.closest(".card");
-        if (!card) return;
-        const bounds = card.getBoundingClientRect();
-        card.style.setProperty("--mx", `${event.clientX - bounds.left}px`);
-        card.style.setProperty("--my", `${event.clientY - bounds.top}px`);
-    }, { passive: true });
 
     const bindings = {
         "[data-site-name]": SITE.name,

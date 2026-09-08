@@ -71,7 +71,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             ["public_repos", String(repositories.length)],
             ["community_stars", String(starCount)],
             ["last_push", lastPush ? relativeTime(lastPush.created_at) : "—"],
-            ["current_mode", "building"],
         ].map(([key, value]) =>
             `<code><span class="tok-key">${key}</span>: <span class="tok-val">"${escapeHtml(value)}"</span></code>`
         ).join("");

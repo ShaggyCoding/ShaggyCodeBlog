@@ -1,7 +1,7 @@
 const SITE = {
     githubUsername: "ShaggyCoding",
     name: "Finn Eric Kawel",
-    role: "Softwareentwickler",
+    role: "Softwareentwicklung",
     tagline: "Digitale Werkzeuge, saubere Lösungen und nachvollziehbare Entwicklung.",
     location: "Deutschland",
     email: "",
