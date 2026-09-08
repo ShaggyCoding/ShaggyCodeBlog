@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#080d16">
+    <title>Devlog — Finn Eric Kawel</title>
+    <meta name="description" content="Kurze Beiträge über Architektur-Entscheidungen und Stolpersteine aus echten Projekten von Finn Eric Kawel.">
+    <meta property="og:title" content="Devlog — Finn Eric Kawel">
+    <meta property="og:description" content="Wie einzelne Projekte tatsächlich gebaut wurden — Entscheidungen, Kompromisse, Lektionen.">
+    <meta property="og:image" content="assets/images/og.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Finn Eric Kawel — Devlog">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="assets/images/og.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <a class="skip-link" href="#main">Zum Inhalt springen</a>
+
+    <header class="header">
+        <div class="shell header__inner">
+            <a class="brand" href="index.html" aria-label="Finn Eric Kawel, Startseite"><span class="brand__signal" aria-hidden="true"></span><span data-site-name>Finn Eric Kawel</span><span class="brand__suffix">/DEV</span></a>
+            <nav class="nav" id="nav" aria-label="Hauptnavigation">
+                <a class="nav__link" href="index.html">Start</a>
+                <a class="nav__link" href="projects.html">Projekte</a>
+                <a class="nav__link" href="github_pushes.html">Aktivität</a>
+                <a class="nav__link is-active" href="blog.html" aria-current="page">Devlog</a>
+                <a class="nav__link" href="about.html">Profil</a>
+            </nav>
+            <div class="header__end">
+                <a class="header__github" href="https://github.com/ShaggyCoding" target="_blank" rel="noopener" data-github-url>GitHub <span aria-hidden="true">↗</span></a>
+                <button class="nav-toggle" type="button" aria-label="Navigation öffnen" aria-expanded="false" aria-controls="nav"><span></span><span></span></button>
+            </div>
+        </div>
+    </header>
+
+    <main id="main">
+        <section class="page-hero page-hero--blog">
+            <div class="shell">
+                <div class="page-hero__top reveal">
+                    <span class="section-index">Devlog / Wie es wirklich gebaut wurde</span>
+                    <span class="availability"><i aria-hidden="true"></i> Echte Projekte, keine Case-Study-Werbung</span>
+                </div>
+                <div class="page-hero__grid">
+                    <h1 class="reveal">Notizen aus<br><em>echten Projekten.</em></h1>
+                    <p class="reveal">Architektur-Entscheidungen, Kompromisse und Dinge, die beim nächsten Mal anders laufen — festgehalten, während sie noch frisch sind.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="archive archive--blog">
+            <div class="shell">
+                <div class="post-grid">
+                    <article class="post-card reveal">
+                        <a href="blog-rpkartellshop.html" class="post-card__link">
+                            <span class="post-card__meta">Backend · PHP/MySQL</span>
+                            <h2>Ein Shopsystem, das jeder im Team gleich sieht</h2>
+                            <p>Wie der Kartellshop für einen FiveM-RP-Server aufgebaut ist — und warum die lokale Entwicklung komplett ohne MySQL auskommt.</p>
+                            <span class="post-card__cta">Beitrag lesen <span aria-hidden="true">→</span></span>
+                        </a>
+                    </article>
+                    <article class="post-card reveal">
+                        <a href="blog-botcontrol-dashboard.html" class="post-card__link">
+                            <span class="post-card__meta">Backend · Node.js/Express</span>
+                            <h2>Ein Dashboard statt SSH für Discord-Bots</h2>
+                            <p>Bewusst schlank gehalten: SQLite statt Postgres, kein Redis, kein Build-Schritt im Frontend. Warum "Phase 1" so aussieht, wie sie aussieht.</p>
+                            <span class="post-card__cta">Beitrag lesen <span aria-hidden="true">→</span></span>
+                        </a>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="contact-band contact-band--compact">
+            <div class="shell contact-band__inner reveal">
+                <span class="section-index">Der Code dazu</span>
+                <h2>Alle Projekte<br><em>auf GitHub.</em></h2>
+                <div>
+                    <p>Jeder Beitrag verlinkt auf das dazugehörige Repository — mit vollständigem Commit-Verlauf statt nachträglich geglätteter Geschichte.</p>
+                    <a class="button button--dark" href="projects.html">Projekte ansehen <span aria-hidden="true">→</span></a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="shell footer__top">
+            <a class="footer__brand" href="index.html"><span data-site-name>Finn Eric Kawel</span><small>Entwicklung mit System</small></a>
+            <nav class="footer__links" aria-label="Navigation im Footer"><a href="projects.html">Projekte</a><a href="github_pushes.html">Aktivität</a><a href="blog.html">Devlog</a><a href="about.html">Profil</a><a href="https://github.com/ShaggyCoding" target="_blank" rel="noopener" data-github-url>GitHub ↗</a></nav>
+        </div>
+        <div class="shell footer__bottom"><span>© <span data-year></span> <span data-site-name>Finn Eric Kawel</span></span><span>Entwickelt in Deutschland / offen dokumentiert</span></div>
+    </footer>
+
+    <script src="assets/js/config.js"></script>
+    <script src="assets/js/ui.js"></script>
+</body>
+</html>

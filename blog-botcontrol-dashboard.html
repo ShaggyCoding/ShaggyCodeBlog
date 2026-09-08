@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#080d16">
+    <title>Ein Dashboard statt SSH für Discord-Bots — Devlog — Finn Eric Kawel</title>
+    <meta name="description" content="Wie BotControl-Dashboard aufgebaut ist — bewusst schlank gehalten für einen kleinen VPS: SQLite statt Postgres, kein Redis, kein Build-Schritt.">
+    <meta property="og:title" content="Ein Dashboard statt SSH für Discord-Bots — Devlog">
+    <meta property="og:description" content="Warum BotControl-Dashboard auf Postgres, Redis und einen Frontend-Build-Schritt verzichtet — und was das für Phase 1 bedeutet.">
+    <meta property="og:image" content="assets/images/og.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Finn Eric Kawel — Devlog">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="assets/images/og.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <a class="skip-link" href="#main">Zum Inhalt springen</a>
+
+    <header class="header">
+        <div class="shell header__inner">
+            <a class="brand" href="index.html" aria-label="Finn Eric Kawel, Startseite"><span class="brand__signal" aria-hidden="true"></span><span data-site-name>Finn Eric Kawel</span><span class="brand__suffix">/DEV</span></a>
+            <nav class="nav" id="nav" aria-label="Hauptnavigation">
+                <a class="nav__link" href="index.html">Start</a>
+                <a class="nav__link" href="projects.html">Projekte</a>
+                <a class="nav__link" href="github_pushes.html">Aktivität</a>
+                <a class="nav__link is-active" href="blog.html" aria-current="page">Devlog</a>
+                <a class="nav__link" href="about.html">Profil</a>
+            </nav>
+            <div class="header__end">
+                <a class="header__github" href="https://github.com/ShaggyCoding" target="_blank" rel="noopener" data-github-url>GitHub <span aria-hidden="true">↗</span></a>
+                <button class="nav-toggle" type="button" aria-label="Navigation öffnen" aria-expanded="false" aria-controls="nav"><span></span><span></span></button>
+            </div>
+        </div>
+    </header>
+
+    <main id="main">
+        <article class="post">
+            <div class="shell">
+                <div class="post__meta reveal">
+                    <a href="blog.html">← Devlog</a>
+                    <span>·</span>
+                    <span>Backend · Node.js/Express</span>
+                </div>
+                <h1 class="post__title reveal">Ein Dashboard statt SSH für Discord-Bots</h1>
+                <p class="post__intro reveal">BotControl-Dashboard verwaltet Discord-Bots über eine dunkle Web-Oberfläche: Status, Konfiguration, Live-Logs und Statistiken, ohne dass man sich für jede Kleinigkeit per SSH auf den Server verbinden muss. Der Name ist Programm — es ist "Phase 1" einer geplanten Multi-Bot-Plattform, und diese Phase 1 sieht bewusst anders aus, als man erwarten würde.</p>
+
+                <div class="post__body reveal">
+                    <h2>Klein anfangen heißt: wirklich klein</h2>
+                    <p>Die naheliegende Wahl für ein "Verwaltungs-Dashboard" wäre Postgres, Redis für Sessions/Queues und ein Frontend-Build-Schritt mit irgendeinem Framework. Alles drei fehlt hier absichtlich. Das Dashboard läuft auf demselben kleinen VPS wie der Bot, den es verwaltet — jede zusätzliche Abhängigkeit ist ein zusätzlicher Dienst, der überwacht, aktualisiert und im Zweifel um 3 Uhr nachts neu gestartet werden muss.</p>
+                    <p>Statt Postgres kommt <code>node:sqlite</code> zum Einsatz — das eingebaute SQLite-Modul von Node.js. Kein natives Kompilieren, keine zusätzliche Systemabhängigkeit, eine Datei statt eines Datenbank-Prozesses. Für die erwartete Last (ein Admin-Team, nicht tausende gleichzeitige Nutzer) ist das nicht nur ausreichend, sondern die robustere Wahl.</p>
+
+                    <div class="post__callout">
+                        <strong>Entscheidung</strong>
+                        Vanilla JS/HTML/CSS im Frontend, kein Build-Schritt. Ein Edit in der Datei ist ein Edit, das sofort im Browser sichtbar ist — kein Watch-Prozess, der zwischen Server und Dashboard mitlaufen muss.
+                    </div>
+
+                    <h2>Zugriff über Discord selbst regeln</h2>
+                    <p>Statt eine eigene Nutzerverwaltung mit Passwörtern zu bauen, läuft der Login über Discord-OAuth2. Zugriff bekommt nur, wer auf dem verwalteten Server eine berechtigte Rolle hat (Owner/Administrator/Moderator, über eine Rollen-ID konfigurierbar). Das erspart ein zweites Identitätssystem — die Rolle, die im Discord-Server sowieso schon über Rechte entscheidet, entscheidet auch hier.</p>
+
+                    <h2>Kontrolle ohne Shell-Zugriff</h2>
+                    <p>Start, Stopp und Neustart eines Bots laufen über systemd im Hintergrund — ein Klick im Dashboard statt eines SSH-Befehls. Konfiguration (Kanal-/Rollen-IDs, Feature-Toggles) lässt sich direkt im Browser bearbeiten und landet in der <code>.env</code>-Datei des Bots. Eine bewusste Grenze dabei: Tokens, API-Keys und Passwörter bleiben in der Oberfläche grundsätzlich unsichtbar und nicht editierbar. Bequemlichkeit hört an der Stelle auf, wo sie zum Sicherheitsrisiko würde.</p>
+                    <p>Live-Logs sind ein <code>journalctl</code>-Ausschnitt mit Auto-Refresh, Statistiken zeigen Command-Nutzung pro Tag/Befehl als Chart (Chart.js über CDN, auch hier kein Build-Schritt nötig) sowie einen Fehlerzähler. Sessions laufen über JWT in einem httpOnly-Cookie — nicht im Local Storage, wo ein XSS-Bug den Token direkt auslesbar machen würde.</p>
+
+                    <h2>Was "Phase 1" wirklich bedeutet</h2>
+                    <p>Jede der schlanken Entscheidungen hier ist reversibel: Wenn aus einem VPS mit einem Bot irgendwann eine echte Multi-Bot-Plattform mit mehreren Kunden wird, lässt sich <code>node:sqlite</code> gegen Postgres tauschen, ohne die Architektur der Routen anzufassen. Bis dahin ist jede Abhängigkeit, die nicht gebraucht wird, eine Abhängigkeit weniger, die etwas kaputt machen kann.</p>
+                </div>
+
+                <div class="post__footer reveal">
+                    <a class="text-link" href="https://github.com/ShaggyCoding/BotControl-Dashboard" target="_blank" rel="noopener">Repository ansehen <span aria-hidden="true">↗</span></a>
+                    <a class="text-link" href="blog-rpkartellshop.html">Vorheriger Beitrag <span aria-hidden="true">←</span></a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <div class="shell footer__top">
+            <a class="footer__brand" href="index.html"><span data-site-name>Finn Eric Kawel</span><small>Entwicklung mit System</small></a>
+            <nav class="footer__links" aria-label="Navigation im Footer"><a href="projects.html">Projekte</a><a href="github_pushes.html">Aktivität</a><a href="blog.html">Devlog</a><a href="about.html">Profil</a><a href="https://github.com/ShaggyCoding" target="_blank" rel="noopener" data-github-url>GitHub ↗</a></nav>
+        </div>
+        <div class="shell footer__bottom"><span>© <span data-year></span> <span data-site-name>Finn Eric Kawel</span></span><span>Entwickelt in Deutschland / offen dokumentiert</span></div>
+    </footer>
+
+    <script src="assets/js/config.js"></script>
+    <script src="assets/js/ui.js"></script>
+</body>
+</html>

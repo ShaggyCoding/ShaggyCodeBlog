@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#080d16">
+    <title>Ein Shopsystem, das jeder gleich sieht — Devlog — Finn Eric Kawel</title>
+    <meta name="description" content="Wie der Kartellshop für einen FiveM-RP-Server aufgebaut ist — zentrale Daten in einer DB und lokale Entwicklung ganz ohne MySQL.">
+    <meta property="og:title" content="Ein Shopsystem, das jeder gleich sieht — Devlog">
+    <meta property="og:description" content="Wie RPKartellshop aufgebaut ist: PHP/MySQL-Backend, SQLite für die lokale Entwicklung, Deployment auf Shared Hosting.">
+    <meta property="og:image" content="assets/images/og.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Finn Eric Kawel — Devlog">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="assets/images/og.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <a class="skip-link" href="#main">Zum Inhalt springen</a>
+
+    <header class="header">
+        <div class="shell header__inner">
+            <a class="brand" href="index.html" aria-label="Finn Eric Kawel, Startseite"><span class="brand__signal" aria-hidden="true"></span><span data-site-name>Finn Eric Kawel</span><span class="brand__suffix">/DEV</span></a>
+            <nav class="nav" id="nav" aria-label="Hauptnavigation">
+                <a class="nav__link" href="index.html">Start</a>
+                <a class="nav__link" href="projects.html">Projekte</a>
+                <a class="nav__link" href="github_pushes.html">Aktivität</a>
+                <a class="nav__link is-active" href="blog.html" aria-current="page">Devlog</a>
+                <a class="nav__link" href="about.html">Profil</a>
+            </nav>
+            <div class="header__end">
+                <a class="header__github" href="https://github.com/ShaggyCoding" target="_blank" rel="noopener" data-github-url>GitHub <span aria-hidden="true">↗</span></a>
+                <button class="nav-toggle" type="button" aria-label="Navigation öffnen" aria-expanded="false" aria-controls="nav"><span></span><span></span></button>
+            </div>
+        </div>
+    </header>
+
+    <main id="main">
+        <article class="post">
+            <div class="shell">
+                <div class="post__meta reveal">
+                    <a href="blog.html">← Devlog</a>
+                    <span>·</span>
+                    <span>Backend · PHP/MySQL</span>
+                </div>
+                <h1 class="post__title reveal">Ein Shopsystem, das jeder im Team gleich sieht</h1>
+                <p class="post__intro reveal">RPKartellshop ist ein Lager-, Kassen- und Bestellsystem für einen FiveM-Rollenspiel-Server. Die eigentliche Anforderung war simpel, aber ohne die richtige Architektur schnell fehleranfällig: Mehrere Leute greifen gleichzeitig auf denselben Lagerbestand zu, und niemand darf einen veralteten Stand sehen.</p>
+
+                <div class="post__body reveal">
+                    <h2>Eine Wahrheit für alle</h2>
+                    <p>Das Frontend ist bewusst simpel gehalten — statisches HTML/CSS/JS, keine Frontend-Framework-Komplexität. Die eigentliche Arbeit passiert im PHP/MySQL-Backend unter <code>/api</code>: Lager, Bestellungen, Kasse und Nutzer liegen zentral in der Datenbank. Wer die Seite öffnet, sieht immer denselben Stand wie alle anderen — kein lokaler Cache, der aus dem Ruder läuft, keine zwei Kassierer, die versehentlich denselben letzten Artikel verkaufen.</p>
+
+                    <h2>Lokal entwickeln, ohne eine Datenbank aufzusetzen</h2>
+                    <p>Für die Entwicklung auf dem eigenen Rechner eine MySQL-Instanz aufzusetzen, ist unnötiger Aufwand für etwas, das am Ende sowieso auf Shared Hosting läuft. Deshalb erkennt das Backend lokal automatisch, dass keine MySQL-Verbindung konfiguriert ist, und wechselt transparent auf eine SQLite-Datei:</p>
+                    <p><code>php -d extension=pdo_sqlite -d extension=sqlite3 -S localhost:3000 -t .</code></p>
+                    <p>Ein einmaliger Aufruf von <code>/api/install.php</code> legt die Tabellen an und seedet einen Admin-Account samt Beispiel-Lagerbestand. Damit ist die App startklar, ohne dass irgendwer Zugangsdaten verteilen oder ein Datenbank-GUI installieren muss — der einzige Unterschied zur Produktivumgebung ist die Datei statt eines Datenbank-Servers.</p>
+
+                    <div class="post__callout">
+                        <strong>Entscheidung</strong>
+                        Gleicher PHP-Code für lokal und produktiv, nur die Datenbank-Anbindung unterscheidet sich. Kein separates Mock-Backend, das aus dem Tritt geraten könnte.
+                    </div>
+
+                    <h2>Deployment auf Shared Hosting</h2>
+                    <p>Der Server läuft auf Strato — klassisches Shared Hosting, kein eigener VPS. Das bedeutet: MySQL-Datenbank im Kundenmenü anlegen, Zugangsdaten in <code>api/config.php</code> eintragen, fertig. Kein Docker, kein CI/CD-Deployment-Pipeline-Overhead für ein Projekt, das eine kleine Community betreibt — die Lösung passt zur tatsächlichen Größe des Problems, nicht zur größtmöglichen Infrastruktur, die man bauen könnte.</p>
+
+                    <h2>Was ich beim nächsten Mal anders mache</h2>
+                    <p>Die SQLite-Datei für die lokale Entwicklung war die richtige Entscheidung — sie gehört bewusst nicht ins Repository, damit niemand versehentlich lokale Testdaten mit hochlädt. Was fehlt, ist ein automatisierter Test, der sicherstellt, dass API-Endpunkte unter SQLite und MySQL wirklich identisch funktionieren, statt das von Hand zu prüfen.</p>
+                </div>
+
+                <div class="post__footer reveal">
+                    <a class="text-link" href="https://github.com/ShaggyCoding/RPKartellshop" target="_blank" rel="noopener">Repository ansehen <span aria-hidden="true">↗</span></a>
+                    <a class="text-link" href="blog-botcontrol-dashboard.html">Nächster Beitrag <span aria-hidden="true">→</span></a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <div class="shell footer__top">
+            <a class="footer__brand" href="index.html"><span data-site-name>Finn Eric Kawel</span><small>Entwicklung mit System</small></a>
+            <nav class="footer__links" aria-label="Navigation im Footer"><a href="projects.html">Projekte</a><a href="github_pushes.html">Aktivität</a><a href="blog.html">Devlog</a><a href="about.html">Profil</a><a href="https://github.com/ShaggyCoding" target="_blank" rel="noopener" data-github-url>GitHub ↗</a></nav>
+        </div>
+        <div class="shell footer__bottom"><span>© <span data-year></span> <span data-site-name>Finn Eric Kawel</span></span><span>Entwickelt in Deutschland / offen dokumentiert</span></div>
+    </footer>
+
+    <script src="assets/js/config.js"></script>
+    <script src="assets/js/ui.js"></script>
+</body>
+</html>
